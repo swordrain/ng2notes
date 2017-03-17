@@ -31,7 +31,7 @@ export { ErpIdentityValidate as GFIdentityValidate };
 
 模块包装
 ```
-export {ErpIdentityValidate as RegExpBasedZipCodeValidator } from "./ErpIdentityValiate";
+export { ErpIdentityValidate as RegExpBasedZipCodeValidator } from "./ErpIdentityValiate";
 
 export * from "./IdentityValidate";
 ```
@@ -84,3 +84,5 @@ export default "Angular";
 import name from "./constantService";
 console.log(name);
 ```
+
+# 接口

@@ -74,3 +74,47 @@ export class ChangeLogComponent implements OnChanges {
 }
 ```
 ## 子向父传递数据
+父组件
+```
+@Component({
+    selector: 'collection',
+    template: `
+        <contact-collect [contact]="detail" (onCollect)="collectTheContact($event)"></contact-collect>
+    `
+})
+export class CollectionComponent {
+    detail: any = {};
+    collectTheContact() {
+        this.detail.collection == 0 ? this.detail.collection = 1 : this.detail.collection = 0;
+    }
+}
+```
+子组件
+```
+@Component({
+    selector: 'contact-collect',
+    template: `
+        <i [ngClass]="{collected: contact.collection}" (click)="collectTheContact()">收藏</i>
+    `
+})
+export class ContactCollectionComponent {
+    @Input() contact: any = {};
+    @Output() onCollect = new EventEmitter<boolean>();
+    collectTheContact() {
+        this.onCollect.emit();
+    }
+}
+```
+## 其他组件交互方式
+
+**通过局部变量**
+```
+@Component({
+    selector: 'collection',
+    template: `
+        <contact-collect (onCollect)="collect.collectTheContact($event)" #collect></contact-collect>
+    `
+})
+```
+collect就是子组件实例的引用
+**使用@ViewChild**

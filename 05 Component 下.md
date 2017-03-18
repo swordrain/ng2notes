@@ -118,3 +118,80 @@ export class ContactCollectionComponent {
 ```
 collect就是子组件实例的引用
 **使用@ViewChild**
+如果参数为类实例，表示父组件将绑定一个指令或子组件实例
+如果参数为字符串，表示绑定字符串作为选择器所选择的模板内容
+```
+//修改父组件
+@Component({
+    selector: 'collection',
+    template: `
+        <contact-collect (onCollect)="collectTheContact()"></contact-collect>
+    `
+})
+export class CollectionComponent {
+    @ViewChild(ContactCollectCimponent) contactCollect: ContactCollectComponent;
+    collectTheContact() {
+        this.contactCollect.collectTheContact();
+    }
+}
+```
+# 组件内容嵌入
+>相当于React的props.children
+使用`<ng-content>`，`select`用于匹配一个内容的部分
+```
+@Component({
+    selector: 'example-content',
+    template: `
+        <div>
+            <div>
+                <ng-content select="header"></ng-content>
+            </div>
+            <div>
+                <ng-content select=".class-select"></ng-content>
+            </div>
+            <div>
+                <ng-content select="[name=footer]"></ng-content>
+            </div>
+        </div>
+        `
+    })
+```
+使用的时候
+```
+@Component({
+    selector: 'app',
+    template: `
+        <example-content>
+            <header>Header content</header>
+            <div class="class-select">
+                div with .class-select
+            </div>
+            <div name="footer">Footer content</div>
+        </example-content>
+    `
+})
+```
+
+# 组件生命周期
+在组件类里`implements`生命周期钩子，以下是按顺序的钩子方法  
+* ngOnChanges
+>等于ng1的$scope.$watch函数   
+
+发生在ngOnInit之前，或者绑定输入属性的值发生变化时
+* ngOnInit
+用于初始化，比如调用API获得数据
+* ngDoCheck
+用于变化检测，在每次变化监测发生时被调用，大多数情况下不会ngOnChange一起使用，ngDoCheck的粒度更小，能完成更灵活的变化监测
+* ngAfterContentInit
+在组件中使用`<ng-content>`将外部内容嵌入到组件视图后调用，只执行一次
+* ngAfterContentChecked
+在组件中使用`<ng-content>`将外部内容嵌入到组件视图后调用，或者每次变化监测时调用
+* ngAfterViewInit
+在Angular创建了组件的视图及其子组件视图后被调用  
+>听起来像React的ComponentDidMount
+* ngAfterViewChecked
+在Angular创建了组件的视图及其子组件视图之后被调用一次，并且在每次子组件变化监测时也被调用
+* ngOnDestroy
+在销毁组件之前触发，那些订阅的观察者事件，绑定DOM事件，setTimeout、setInterval设置的计时器都应该在此被清除，以免引起内存泄漏
+
+ng2的数据变化检测是通过NgZone服务掌控的

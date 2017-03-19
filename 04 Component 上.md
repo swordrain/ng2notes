@@ -29,12 +29,15 @@ export class ContactItemComponent { }
 
 ### 组件元数据  
 *selector*  
+string  
 用烤肉串方式命名，如`hello-world`
 
 *template*  
+string  
 建议使用`语法包含多行字符串  
 
 *templateUrl*  
+string  
 外部模板的URL地址，
 ```
 @Component({
@@ -43,9 +46,52 @@ export class ContactItemComponent { }
 ```
 
 *styles styleUrls*  
+string[]  
 注意是数组形式，如果同时指定，styles中的样式先被解析，意味着被styleUrls覆盖
 
-（回头补充详细的）
+*inputs outputs*  
+stirng[]  
+指定组件的输入输出属性
+
+*host*  
+{[key: string]: string;}
+指定指令/组件的事件、动作和属性等
+
+*providers*
+any[]
+指定该组件及其所有子组件（含ContentChildren）可用的服务
+
+*exportAs*  
+string  
+给指令分配一个变量，使得可以在模板中调用
+
+*moduleId*  
+string  
+包含该组件模块的id，被用于解析模板和样式的相对路径
+
+*queries*  
+{[key: string]:any;}  
+设置需要被注入到组件的查询  
+
+*viewProviders*  
+any[]  
+指定该组件及其所有子组件（不含ContentChildren）可用的服务
+
+*changeDetection*  
+ChangeDetectionStrategy  
+指定使用的变化监测策略
+
+*animations*  
+AnimationEntryMetadata[]  
+设置Angular动画
+
+*encapsulation*
+ViewEncapsulation  
+设置组件的视图包装选项
+
+*interpolation*  
+[string, stirng]  
+设置自定义插值标记，默认是{{}}
 
 ### 数据绑定与事件坚挺
 `{{}}`用来单向绑定  
